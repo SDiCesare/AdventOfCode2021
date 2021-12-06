@@ -4,8 +4,6 @@
 #include <string>
 #include <vector>
 
-#include "lanternfish.h"
-
 std::vector<std::string> getFileContent(std::ifstream *inFile)
 {
     std::vector<std::string> out;
@@ -32,46 +30,51 @@ std::vector<std::string> split(std::string s, std::string delimiter)
     return out;
 }
 
-void runSymulation(std::vector<Lanternfish> fishes, int duration)
+void runSymulation(long long int fishes[10], int duration)
 {
-    std::cout << "Initial State: ";
-    for (auto fish = fishes.begin(); fish < fishes.end(); fish++)
-    {
-        std::cout << fish->getAge();
-        if (fish != fishes.end())
-        {
-            std::cout << ",";
-        }
-    }
-    std::cout << "\n";
     for (int day = 1; day <= duration; day++)
     {
         //Pass a day for the fishes
-        std::cout << "Day " << day << "\n";
-        int l = fishes.size();
-        for (int i = 0; i < l; i++)
+        for (int i = 0; i < 10; i++)
         {
-            if (fishes[i].getAge() == 0)
+            long long int count = fishes[i];
+            if (i == 0)
             {
-                fishes.push_back(*fishes[i].makeChild());
+                fishes[7] += count;
+                fishes[9] += count;
+                fishes[0] = 0;
             }
-            fishes[i].tick();
+            else
+            {
+                fishes[i - 1] += count;
+                fishes[i] = 0;
+            }
+        }
+        std::cout << "Day " << day << "\n";
+        for (int i = 0; i < 10; i++)
+        {
+            std::cout << "(" << i << "," << fishes[i] << ")";
         }
         std::cout << "\n";
     }
-    std::cout << "Total fish after " << duration << " days: " << fishes.size() << "\n";
+    long long int total = 0;
+    for (int i = 0; i < 10; i++)
+    {
+        total += fishes[i];
+    }
+    std::cout << "Total fish after " << duration << " days: " << total << "\n";
 }
 
 void analyzeData(std::vector<std::string> content)
 {
     std::vector<std::string> fishesAge = split(content[0], ",");
-    std::vector<Lanternfish> fishes;
+    long long int fishes[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
     for (int i = 0; i < fishesAge.size(); i++)
     {
         std::string var = fishesAge[i];
-        fishes.push_back(Lanternfish(std::stoi(var)));
+        fishes[std::stoi(var)]++;
     }
-    runSymulation(fishes, 80);
+    runSymulation(fishes, 256);
 }
 
 int main(int argc, char *argv[])
