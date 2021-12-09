@@ -1,0 +1,20 @@
+L'approccio, lungo seppur funzionante, nell'idea di codificare l'input in arrivo, si sviluppa su più fasi:
+
+1) Innanzitutto inserisco all'interno della mia matrice rappresentativa della codifica delle singole cifre, i valori con codifica segmenti<->segnale univoca, ossia l'1, il 4, il 7 e l'8.
+2) Dopo di che controllo i valori con codifica segmenti<->segnale di segmenti=6.
+   Per verificare se la sequenza rappresenta un 6, controllo quanti segnali ha in comune con i segnali del 7. Se ne ha solo 2, significa che è il 6.
+   Per verificare se la sequenza rappresenta uno 0, controllo quanti segnali ha in comune con i segnali del 4. Se ne ha solo 3, significa che è uno 0.
+   Se nessuna delle due condizioni precedenti viene soddisfatta, significa che ho a che fare con una sequenza rappresentativa del 9, dato che è l'unico numero rimasto rappresentabile con 6 segnali.
+3) Infine passo a controllare i valori con codifica segmenti<->segnale di segmenti=5.
+   Per verificare se la sequenza rappresenta un 3, controllo quanti segnali ha in comune con i segnali dell'1. Se ne ha 2, significa che è un 3.
+   Per verificare se la sequenza rappresenta un 5, controllo quanti segnali ha in comune con i segnali del 4. Se ne ha 3, significa che è un 5.
+   Se nessuna delle due condizioni precedenti viene soddisfatta, significa che ho a che fare con una sequenza rappresentativa del 2, dato che è l'unico numero rimasto rappresentabile con 5 segnali.
+4) Una volta che ho tutti i numeri con la loro codifica segnali assegnata, passo a controllare quali segnali corrispondono a quali segmenti:
+   a) Verifico quale segnale è assente tra quelli del 6. Il segnale assente è la codifica segmento<->segnale al segmento 2.
+   b) Verifico quale segnale è assente tra quelli del 9. Il segnale assente è la codifica segmento<->segnale al segmento 4.
+   c) Verifico quale segnale è assente tra quelli dello 0. Il segnale assente è la codifica segmento<->segnale al segmento 3.
+   d) Controllo quale segnale è presente nel 7, ma non nel 4. Il segnale rimanente tra i 3 del 7, è quello per la codifica segmento<->segnale al segmento 0.
+   e) Controllo quale segnale del 2 è assente nella mia attuale codifica. Il segnale assente è la codifica segmento<->segnale al segmento 6.
+   f) Controllo quale segnale del 3 è assente nella mia attuale codifica. Il segnale assente è la codifica segmento<->segnale al segmento 5.
+   g) Controllo quale sodifica segmento<->segnale è assente nella mia attuale, rappresenta l'ultima codifica segmento<->segnale al segmento 1.
+5) Codifico gli output come numeri, ed infine li sommo assieme per ottenere il risultato.
