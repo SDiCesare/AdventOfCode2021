@@ -1,3 +1,4 @@
+[ITALIANO]
 L'approccio, lungo seppur funzionante, nell'idea di codificare l'input in arrivo, si sviluppa su più fasi:
 
 1) Innanzitutto inserisco all'interno della mia matrice rappresentativa della codifica delle singole cifre, i valori con codifica segmenti<->segnale univoca, ossia l'1, il 4, il 7 e l'8.
@@ -18,3 +19,25 @@ L'approccio, lungo seppur funzionante, nell'idea di codificare l'input in arrivo
    f) Controllo quale segnale del 3 è assente nella mia attuale codifica. Il segnale assente è la codifica segmento<->segnale al segmento 5.
    g) Controllo quale sodifica segmento<->segnale è assente nella mia attuale, rappresenta l'ultima codifica segmento<->segnale al segmento 1.
 5) Codifico gli output come numeri, ed infine li sommo assieme per ottenere il risultato.
+
+[ENGLISH]
+The approach, long although functional, in the idea of encoding the incoming input, develops over several phases:
+
+1) First of all I insert within my matrix representing the encoding of the single digits, the values with encoding segments <-> unique signal, that is 1, 4, 7 and 8.
+2) After that I check the values with coding segments <-> segment signal = 6.
+   To see if the sequence represents a 6, I check how many signals it has in common with the signals of 7. If it only has 2, it means that it is 6.
+   To check if the sequence represents a 0, I check how many signals it has in common with the signals of 4. If it only has 3, it means that it is a 0.
+   If neither of the previous two conditions is satisfied, it means that I am dealing with a representative sequence of 9, since it is the only number left that can be represented with 6 signals.
+3) Finally, I check the values with coding segments <-> segments signal = 5.
+   To see if the sequence represents a 3, I check how many signals it has in common with the signals of 1. If it has 2, it means it's a 3.
+   To see if the sequence represents a 5, I check how many signals it has in common with the signals of 4. If it has 3, it means that it is a 5.
+   If neither of the previous two conditions is satisfied, it means that I am dealing with a representative sequence of 2, since it is the only number left that can be represented with 5 signals.
+4) Once I have all the numbers with their assigned signal encoding, I check which signals correspond to which segments:
+   a) I check which signal is absent among those of 6. The absent signal is the encoding segment <-> signal at segment 2.
+   b) I check which signal is absent among those of 9. The absent signal is the encoding segment <-> signal at segment 4.
+   c) I check which signal is absent among those of 0. The absent signal is the encoding segment <-> signal at segment 3.
+   d) Check which signal is present in the 7, but not in the 4. The remaining signal between the 3 of the 7, is the one for the encoding segment <-> signal at segment 0.
+   e) I check which signal of 2 is absent in my current encoding. The absent signal is the encoding segment <-> signal at segment 6.
+   f) I check which signal of 3 is absent in my current encoding. The absent signal is the encoding segment <-> signal at segment 5.
+   g) Check which soda segment <-> signal is absent in my current one, represents the last coded segment <-> signal at segment 1.
+5) I encode the outputs as numbers, and finally add them together to get the result.
