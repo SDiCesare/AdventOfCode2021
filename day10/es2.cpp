@@ -3,6 +3,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <algorithm>
 
 std::vector<std::string> getFileContent(std::ifstream *inFile)
 {
@@ -32,11 +33,13 @@ std::vector<std::string> split(std::string s, std::string delimiter)
 
 void analyzeData(std::vector<std::string> content)
 {
-    int totalErrorValue = 0;
+    std::vector<long long int> errors;
     for (int i = 0; i < content.size(); i++)
     {
         std::string line = content[i];
         std::vector<char> caves;
+        std::string completeSyntax = "";
+        bool corrupted = false;
         for (int j = 0; j < line.size(); j++)
         {
             char c = line[j];
@@ -54,32 +57,51 @@ void analyzeData(std::vector<std::string> content)
             }
             else
             {
-                char expected = caves[caves.size() - 1] + 1;
-                if (expected != ')')
+                corrupted = true;
+                break;
+            }
+        }
+        if (!corrupted)
+        {
+            long long int totalErrorValue = 0;
+            for (int j = caves.size() - 1; j >= 0; j--)
+            {
+                char c = caves[j] + 1;
+                if (c != ')')
                 {
-                    expected += 1;
+                    c += 1;
                 }
+                completeSyntax += c;
+                totalErrorValue *= 5;
                 switch (c)
                 {
                 case ')':
-                    totalErrorValue += 3;
+                    totalErrorValue += 1;
                     break;
                 case ']':
-                    totalErrorValue += 57;
+                    totalErrorValue += 2;
                     break;
                 case '}':
-                    totalErrorValue += 1197;
+                    totalErrorValue += 3;
                     break;
                 case '>':
-                    totalErrorValue += 25137;
+                    totalErrorValue += 4;
                     break;
                 }
-                std::cout << "Syntax Error at line:" << (i + 1) << ":" << (j + 1) << "\n\tExpected \'" << expected << "\', Found \'" << c << "\'\n";
-                //break;
             }
+            /*std::cout << "Complete Syntax for line " << i << "\t" << completeSyntax << "\n";
+            std::cout << "Total Error [" << totalErrorValue << "]\n";
+            std::cout << "\n";*/
+            errors.push_back(totalErrorValue);
         }
     }
-    std::cout << "Total Error [" << totalErrorValue << "]\n";
+    std::sort(errors.begin(), errors.end());
+    for (auto x = errors.begin(); x < errors.end(); x++)
+    {
+        std::cout << *x << "\n";
+    }
+    std::cout << errors.size() << " - " << errors.size() / 2 << "\n";
+    std::cout << errors[errors.size() / 2] << "\n";
 }
 
 int main(int argc, char *argv[])
@@ -99,6 +121,7 @@ int main(int argc, char *argv[])
     inFile->open(fileName);
     std::vector<std::string> content = getFileContent(inFile);
     inFile->close();
+    std::cout << 5 / 2 << "\n";
     analyzeData(content);
     return 0;
 }
