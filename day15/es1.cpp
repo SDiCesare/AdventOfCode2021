@@ -8,6 +8,7 @@
 #include <map>
 #include <cctype>
 #include <cstring>
+#include "Map.h"
 
 std::vector<std::string> getFileContent(std::ifstream *inFile)
 {
@@ -37,7 +38,23 @@ std::vector<std::string> split(std::string s, std::string delimiter)
 
 void analyzeData(std::vector<std::string> content)
 {
-       
+    int width = content[0].size();
+    int height = content.size();
+    std::cout << width << "X" << height << "\n";
+    Map map(width, height);
+    for (int i = 0; i < height; i++)
+    {
+        for (int j = 0; j < width; j++)
+        {
+            std::cout << i << "," << j << "\n";
+            map[i][j] = content[i][j] - '0';
+        }
+    }
+    //map.initialize(content);
+    map.print();
+    int length = map.getPathLength();
+    std::cout << "==================================\n";
+    std::cout << length << "\n";
 }
 
 int main(int argc, char *argv[])
